@@ -29,7 +29,7 @@ class Manager:
         """Add a System instance to the Manager
 
         :param system_instance: An instance of a System that
-        is a sub class of SystemTemplate
+        is a subclass of SystemTemplate
         """
         assert issubclass(system_instance.__class__, ecs.SystemTemplate)
         system_instance.Manager = self
