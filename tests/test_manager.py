@@ -1,5 +1,20 @@
 import ecs
+import pytest
 
+
+@pytest.fixture
+def manager():
+    return ecs.Manager()
+
+@pytest.fixture
+def get_populated_manager():
+    populated_manager = ecs.Manager()
+    make_entities(populated_manager, 1000)
+    return populated_manager
+
+###############################
+# Helper Function and Classes #
+###############################
 
 def make_entities(manager, num):
     for _ in range(num // 2):
