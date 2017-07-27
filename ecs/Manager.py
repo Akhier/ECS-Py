@@ -97,3 +97,13 @@ class Manager:
         :param entity: ID of the entity to get the components from
         """
         return tuple(self._entities[entity].values())
+
+    def has_component(self, entity, component_type):
+        """Check if an entity has a specific component type
+
+        :param entity: ID of the entity to check
+        :param component_type: The type of the component to check for
+        :return: True if entity has a component of given type,
+        else False
+        """
+        return component_type in self._entities[entity]
