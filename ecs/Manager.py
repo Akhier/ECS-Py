@@ -76,3 +76,12 @@ class Manager:
             del self._entities[entity]
         else:
             self._dead_entities.add(entity)
+
+    def get_component_from_entity(self, component_type, entity):
+        """Get component instance of specified type from given entity
+
+        Raises KeyError if either Entity or Component type does not exist
+        :param component_type: The class type of the Component you want to get
+        :param entity: ID of the entity to get the component from
+        """
+        return self._entities[entity][component_type]
