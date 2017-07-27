@@ -166,3 +166,19 @@ class Manager:
                                for component_type in component_types]
         except KeyError:
             pass
+
+    def process(self, *args):
+        """Call the process method for all systems
+
+        Calls all process methods for all attached systems as well
+        as removing any entities marked for removal
+
+        :param args: Optional arguments that will be passed directly
+        to the process method of the attached systems
+        """
+        if self._dead_entities:
+            for entity in self._dead_entities:
+                self.remove_entity(entity, immediate=True)
+            self._dead_entities.clear()
+        for system in self._systems:
+            system.process(*args)
