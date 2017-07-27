@@ -149,3 +149,20 @@ class Manager:
         entity_db = self._entities
         for entity in self._components.get(component_type, []):
             yield entity, entity_db[entity][component_type]
+
+    def get_components(self, *component_types):
+        """Get an iterator for entities with a specific set of components
+
+        :param component_types: Two or more component types
+        :return: An iterator for (entity, (componentA, componentB, ...)) tuples
+        """
+        entity_db = self._entities
+        component_db = self._components
+        try:
+            for entity in set.intersection(*[component_db[component_type]
+                                             for component_type
+                                             in component_types]):
+                yield entity, [entity_db[entity][component_type]
+                               for component_type in component_types]
+        except KeyError:
+            pass
