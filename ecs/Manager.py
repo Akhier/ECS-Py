@@ -34,3 +34,13 @@ class Manager:
         assert issubclass(system_instance.__class__, ecs.SystemTemplate)
         system_instance.Manager = self
         self._systems.append(system_instance)
+
+    def remove_system(self, system_type):
+        """Removes a System type from the Manager
+
+        :param system_type: The System class type to be removed
+        """
+        for system in self._systems:
+            if type(system) == system_type:
+                system.Manager = None
+                self._systems.remove(system)
