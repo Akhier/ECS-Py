@@ -107,3 +107,20 @@ class Manager:
         else False
         """
         return component_type in self._entities[entity]
+
+    def add_component_to_entity(self, component_instance, entity):
+        """Add a component onto the given entity
+
+        If the component to add already exists on the entity the old
+        component will be replaced
+
+        :param component_instance: A component instance
+        :param entity: ID of the entity to add to
+        """
+        component_type = type(component_instance)
+        if component_type not in self._components:
+            self._components[component_type].set()
+        self._components[component_type].add(entity)
+        if entity not in self._entities:
+            self._entities[entity] = {}
+        self._entities[entity][component_type].add(component_instance)
