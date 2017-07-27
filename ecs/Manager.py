@@ -124,3 +124,18 @@ class Manager:
         if entity not in self._entities:
             self._entities[entity] = {}
         self._entities[entity][component_type].add(component_instance)
+
+    def remove_component_from_entity(self, component_type, entity):
+        """Remove a component from an entity by type
+
+        Raises a KeyError if either the component type or entity
+        does not exist in database
+        :param component_type: Type of component to remove
+        :param entity: ID of entity to remove the component from
+        """
+        self._components[component_type].discard(entity)
+        if not self._components[component_type]:
+            del self._components[component_type]
+        del self._entities[entity][component_type]
+        if not self._entities[entity]:
+            del self._entities[entity]
