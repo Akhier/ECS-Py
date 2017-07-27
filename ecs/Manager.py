@@ -83,5 +83,17 @@ class Manager:
         Raises KeyError if either Entity or Component type does not exist
         :param component_type: The class type of the Component you want to get
         :param entity: ID of the entity to get the component from
+        :return: The component instance that was requested from given entity
         """
         return self._entities[entity][component_type]
+
+    def get_all_components_from_entity(self, entity):
+        """Get all components attached to given entity
+
+        Meant to be used for saving the state or transfering
+        an entity to another manager
+
+        Raises KeyError if Entity does not exist
+        :param entity: ID of the entity to get the components from
+        """
+        return tuple(self._entities[entity].values())
