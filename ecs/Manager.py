@@ -139,3 +139,13 @@ class Manager:
         del self._entities[entity][component_type]
         if not self._entities[entity]:
             del self._entities[entity]
+
+    def get_component(self, component_type):
+        """Get an iterator for entity, component pairs
+
+        :param component_type: The component type to get
+        :return: An iterator for (entity, component) tuples
+        """
+        entity_db = self._entities
+        for entity in self._components.get(component_type, []):
+            yield entity, entity_db[entity][component_type]
