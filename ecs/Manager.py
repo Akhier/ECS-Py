@@ -55,3 +55,24 @@ class Manager:
         for component in components:
             self.add_component(self._next_entity_id, component)
         return self._next_entity_id
+
+    def remove_entity(self, entity, immediate=False):
+        """Removes an Entity from the Manager
+
+        By default this method only adds the entity to the list of dead
+        Entities which is taken care of when Manager.process gets called.
+        If immediate however is set to true it will remove the entity
+        at that time.
+
+        Raises a KeyError if the entity is not in the database
+        :param entity: ID of the entity to delete
+        :param immediate: When True entity is removed immediatly
+        """
+        if immediate:
+            for component_type in self._entities[entity]:
+                self._components[component_type].discard(entity)
+                if not self._components[component_type]:
+                    del self._components[component_type]
+            del self._entities[entity]
+        else:
+            self._dead_entities.add(entity)
