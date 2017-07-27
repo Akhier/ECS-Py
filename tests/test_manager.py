@@ -21,6 +21,12 @@ def test_manager_creation(manager):
     assert type(manager._components) == dict
     assert type(manager._systems) == list
 
+def test_new_entity(manager):
+    entityA = manager.new_entity()
+    entityB = manager.new_entity()
+    assert type(entityA) and type(entityB) == int
+    assert entityA < entityB
+
 ###############################
 # Helper Function and Classes #
 ###############################
