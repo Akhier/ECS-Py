@@ -11,3 +11,13 @@ class Manager:
         self._components = {}
         self._entities = {}
         self._dead_entities = set()
+
+    def clear_database(self):
+        """Clears all Components and Entities from the Manager
+
+        Also resets the entity id count
+        """
+        self._components.clear()
+        self._entities.clear()
+        self._dead_entities.clear()
+        self._next_entity_id = 0
