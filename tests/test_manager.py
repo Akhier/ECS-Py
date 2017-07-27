@@ -1,3 +1,5 @@
+import sys
+sys.path.append("..")
 import ecs
 import pytest
 
@@ -11,6 +13,13 @@ def get_populated_manager():
     populated_manager = ecs.Manager()
     make_entities(populated_manager, 1000)
     return populated_manager
+
+def test_manager_creation(manager):
+    assert type(manager) == ecs.Manager
+    assert type(manager._next_entity_id) == int
+    assert type(manager._entities) == dict
+    assert type(manager._components) == dict
+    assert type(manager._systems) == list
 
 ###############################
 # Helper Function and Classes #
@@ -47,14 +56,14 @@ class sysA(ecs.SystemTemplate):
     def process(self):
         pass
 
-class sysB(ecs.SystemTemplate)
+class sysB(ecs.SystemTemplate):
     def __init__(self):
         super().__init__()
 
     def process(self):
         pass
 
-class sysC(ecs.SystemTemplate)
+class sysC(ecs.SystemTemplate):
     def __init__(self):
         super().__init__()
 
