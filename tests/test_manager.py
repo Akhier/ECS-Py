@@ -1,6 +1,15 @@
 import ecs
 
 
+def make_entities(manager, num):
+    for _ in range(num // 2):
+        unit_a = manager.make_entities()
+        manager.add_component_to_entity(unit_a, compA())
+        manager.add_component_to_entity(unit_a, compB())
+        unit_b = manager.make_entities()
+        manager.add_component_to_entity(unit_b, compB())
+        manager.add_component_to_entity(unit_b, compC())
+
 class compA:
     def __init__(self):
         self.a = -1
