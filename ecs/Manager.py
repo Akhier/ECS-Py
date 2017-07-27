@@ -36,7 +36,7 @@ class Manager:
         self._systems.append(system_instance)
 
     def remove_system(self, system_type):
-        """Removes a System type from the Manager
+        """Removes a System class type from the Manager
 
         :param system_type: The System class type to be removed
         """
@@ -44,3 +44,14 @@ class Manager:
             if type(system) == system_type:
                 system.Manager = None
                 self._systems.remove(system)
+
+    def new_entity(self, *components):
+        """Creates an Entity
+
+        :param components: Optional components to add to the new Entity
+        :return: The ID of the new Entity
+        """
+        self._next_entity_id += 1
+        for component in components:
+            self.add_component(self._next_entity_id, component)
+        return self._next_entity_id
