@@ -1,3 +1,6 @@
+import ecs
+
+
 class Manager:
     def __init__(self):
         """A Manager keeps track of all Entities, Components, and Systems
@@ -21,3 +24,13 @@ class Manager:
         self._entities.clear()
         self._dead_entities.clear()
         self._next_entity_id = 0
+
+    def add_system(self, system_instance):
+        """Add a System instance to the Manager
+
+        :param system_instance: An instance of a System that
+        is a sub class of SystemTemplate
+        """
+        assert issubclass(system_instance.__class__, ecs.SystemTemplate)
+        system_instance.Manager = self
+        self._systems.append(system_instance)
