@@ -66,3 +66,13 @@ def run():
     pygame.display.set_caption("Dragonheart ECS Pygame example")
     clock = pygame.time.Clock()
     pygame.key.set_repeat(1, 1)
+    # Create the manager the Entity "green" with Components
+    manager = ecs.Manager()
+    green = manager.new_entity(Velocity())
+    manager.add_component_to_entity(Renderable(
+        image=pygame.image.load("green_square.png")), green)
+    # Create Systems and add them to the manager
+    processmovement = ProcessMovement()
+    manager.add_system(processmovement)
+    render = Render(window)
+    manager.add_system(render)
