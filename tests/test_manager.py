@@ -68,6 +68,13 @@ def test_remove_entity_default(manager):
         manager.get_all_components_from_entity(entityB)
 
 
+def test_get_component_from_entity(manager):
+    entityA = manager.new_entity(compA())
+    assert isinstance(manager.get_component_from_entity(compA, entityA), compA)
+    with pytest.raises(KeyError):
+        manager.get_component_from_entity(entityA, compB)
+
+
 ###############################
 # Helper Function and Classes #
 ###############################
