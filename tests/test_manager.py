@@ -125,9 +125,18 @@ def test_add_system(populated_manager):
     assert len(populated_manager._systems) == 0
     systemA = sysA()
     assert isinstance(systemA, ecs.SystemTemplate)
-    populated_manager.add_system(sysA())
+    populated_manager.add_system(systemA)
     assert len(populated_manager._systems) == 1
     assert isinstance(populated_manager._systems[0], ecs.SystemTemplate)
+
+
+def test_remove_system(populated_manager):
+    systemA = sysA()
+    populated_manager.add_system(systemA)
+    populated_manager.remove_system(sysB)
+    assert len(populated_manager._systems) == 1
+    populated_manager.remove_system(sysA)
+    assert len(populated_manager._systems) == 0
 
 
 ###############################
