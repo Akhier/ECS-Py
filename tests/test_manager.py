@@ -86,6 +86,12 @@ def test_get_all_components_from_entity(manager):
         manager.get_all_components_from_entity(999)
 
 
+def test_has_component(manager):
+    entityA = manager.new_entity(compA())
+    assert manager.has_component(entityA, compA) is True
+    assert manager.has_component(entityA, compB) is False
+
+
 ###############################
 # Helper Function and Classes #
 ###############################
