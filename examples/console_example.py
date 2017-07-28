@@ -1,3 +1,5 @@
+import sys
+sys.path.append("..")
 import ecs
 import time
 
@@ -49,5 +51,5 @@ def main():
 
 
 if __name__ == '__main__':
-    print("example - press ctrl+C to quit")
+    print("example - press ctrl+c to quit")
     main()
