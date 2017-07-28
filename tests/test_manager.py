@@ -146,6 +146,16 @@ def test_remove_system(populated_manager):
     assert len(populated_manager._systems) == 0
 
 
+def test_process(manager):
+    manager.add_system(sysA())
+    componentA = compA()
+    assert componentA.a == -1
+    entityA = manager.new_entity(componentA)
+    assert manager.get_component_from_entity(compA, entityA).a == -1
+    manager.process()
+    assert manager.get_component_from_entity(compA, entityA).a == 0
+
+
 ###############################
 # Helper Function and Classes #
 ###############################
@@ -184,7 +194,8 @@ class sysA(ecs.SystemTemplate):
         super().__init__()
 
     def process(self):
-        pass
+        for entity, component in self.Manager.get_component(compA):
+            component.a += 1
 
 
 class sysB(ecs.SystemTemplate):
