@@ -28,4 +28,15 @@ class ProcessMovement(ecs.SystemTemplate):
         super().__init__()
 
     def process(self):
-        pass
+        # This goes through ever Entity that has
+        # the Velocity and Renderable Component
+        for entity, (velocity, renderable) in self.Manager.get_components(
+                Velocity, Renderable):
+            # Updates the coordinates of Renderable
+            renderable.x += velocity.x
+            renderable.y += velocity.y
+            # This is to keep the Renderable in screen
+            renderable.x = max(0, renderable.x)
+            renderable.y = max(0, renderable.y)
+            renderable.x = min(WIDTH - renderable.width, renderable.x)
+            renderable.y = min(HEIGHT - renderable.height, renderable.y)
