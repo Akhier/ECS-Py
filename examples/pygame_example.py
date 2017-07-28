@@ -62,17 +62,50 @@ class Render(ecs.SystemTemplate):
 def run():
     # Initialize Pygame
     pygame.init()
-    window = pygame.display.set_mode(WIDTH, HEIGHT)
+    window = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Dragonheart ECS Pygame example")
     clock = pygame.time.Clock()
     pygame.key.set_repeat(1, 1)
     # Create the manager the Entity "green" with Components
     manager = ecs.Manager()
     green = manager.new_entity(Velocity())
+    image = pygame.image.load("green_square.png")
     manager.add_component_to_entity(Renderable(
-        image=pygame.image.load("green_square.png")), green)
+        image=image, x=WIDTH // 2 - image.get_width() // 2,
+        y=HEIGHT // 2 - image.get_height() // 2), green)
     # Create Systems and add them to the manager
     processmovement = ProcessMovement()
     manager.add_system(processmovement)
     render = Render(window)
     manager.add_system(render)
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    # A way to directly access an Entity's Velocity
+                    # Component's y attribute without making a
+                    # temporary variable.
+                    manager.get_component_from_entity(Velocity, green).x = -1
+                elif event.key == pygame.K_RIGHT:
+                    manager.get_component_from_entity(Velocity, green).x = 1
+                elif event.key == pygame.K_UP:
+                    manager.get_component_from_entity(Velocity, green).y = -1
+                elif event.key == pygame.K_DOWN:
+                    manager.get_component_from_entity(Velocity, green).y = 1
+                elif event.key == pygame.K_ESCAPE:
+                    running = False
+            elif event.type == pygame.KEYUP:
+                if event.key in (pygame.K_LEFT, pygame.K_RIGHT):
+                    manager.get_component_from_entity(Velocity, green).x = 0
+                if event.key in (pygame.K_UP, pygame.K_DOWN):
+                    manager.get_component_from_entity(Velocity, green).y = 0
+        manager.process()
+        clock.tick(FPS)
+
+
+if __name__ == "__main__":
+    run()
+    pygame.quit()
