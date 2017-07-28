@@ -101,6 +101,18 @@ def test_get_component(populated_manager):
         assert type(component) == compA
 
 
+def test_get_components(populated_manager):
+    assert isinstance(populated_manager.get_components(
+        compA, compB), types.GeneratorType)
+    for entity, components in populated_manager.get_components(compA, compB):
+        assert type(entity) == int
+        assert type(components) == list
+        assert len(components) == 2
+    for entity, (a, b) in populated_manager.get_components(compA, compB):
+        assert type(a) == compA
+        assert type(b) == compB
+
+
 ###############################
 # Helper Function and Classes #
 ###############################
