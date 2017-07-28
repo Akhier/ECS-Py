@@ -1,8 +1,10 @@
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![Build Status](https://travis-ci.org/Akhier/ECS-Py.svg?branch=master)](https://travis-ci.org/Akhier/ECS-Py)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Build Status](https://travis-ci.org/Akhier/ECS-Py.svg?branch=master)](https://travis-ci.org/Akhier/ECS-Py)
 
-# ECS-Py
+## ECS-Py
 ---
 ECS-Py is my implimentation of a basic Entity Component System (ECS).
+
+
 
 #### Structure
 ---
@@ -31,6 +33,8 @@ class LowerHealth(ecs.SystemTemplate):
             health.currenthp += damage.amount
             self.manager.remove_component_from_entity(Damage, entity)
 ```
+
+
  #### Using it
  ---
  To use ECS-Py in your code you will just need to put the ecs folder in the root folder of your project. After that the first step is you need a Manager. This is simple enough
@@ -51,6 +55,8 @@ Finally we can process everything with the manager
 ```python
 manager.process()
 ```
+
+
 #### Examples
 ---
-In the examples folder there is current two examples. The first runs with just the console while the second uses pygame and lets you move a green square around a screen.
+In the examples folder there are currently two examples. The first runs with just the console while the second uses pygame and lets you move a green square around a screen.
