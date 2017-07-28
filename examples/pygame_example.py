@@ -29,7 +29,7 @@ class ProcessMovement(ecs.SystemTemplate):
 
     def process(self):
         # This goes through ever Entity that has
-        # the Velocity and Renderable Component
+        # The Velocity and Renderable Component
         for entity, (velocity, renderable) in self.Manager.get_components(
                 Velocity, Renderable):
             # Updates the coordinates of Renderable
@@ -40,3 +40,19 @@ class ProcessMovement(ecs.SystemTemplate):
             renderable.y = max(0, renderable.y)
             renderable.x = min(WIDTH - renderable.width, renderable.x)
             renderable.y = min(HEIGHT - renderable.height, renderable.y)
+
+
+class Render(ecs.SystemTemplate):
+    def __init__(self, window, clear_color=(0, 0, 0)):
+        super().__init__()
+        self.window = window
+        self.clear_color = clear_color
+
+    def process(self):
+        # Clear the window
+        self.window.fill(self.clear_color)
+        # Iterate though all Entities with Renderable
+        for entity, renderable in self.Manager.get_component(Renderable):
+            self.window.blit(renderable.image, (renderable.x, renderable.y))
+        # Flip the framebuffers
+        pygame.display.flip()
