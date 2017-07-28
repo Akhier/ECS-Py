@@ -8,11 +8,13 @@ import pytest
 def manager():
     return ecs.Manager()
 
+
 @pytest.fixture
 def get_populated_manager():
     populated_manager = ecs.Manager()
     make_entities(populated_manager, 1000)
     return populated_manager
+
 
 def test_manager_creation(manager):
     assert type(manager) == ecs.Manager
@@ -21,11 +23,13 @@ def test_manager_creation(manager):
     assert type(manager._components) == dict
     assert type(manager._systems) == list
 
+
 def test_new_entity(manager):
     entityA = manager.new_entity()
     entityB = manager.new_entity()
     assert type(entityA) and type(entityB) == int
     assert entityA < entityB
+
 
 def test_new_entity_with_components(manager):
     entityA = manager.new_entity(compA())
@@ -36,9 +40,11 @@ def test_new_entity_with_components(manager):
     assert manager.has_component(entityB, compB) is True
     assert manager.has_component(entityB, compC) is True
 
+
 ###############################
 # Helper Function and Classes #
 ###############################
+
 
 def make_entities(manager, num):
     for _ in range(num // 2):
@@ -49,20 +55,24 @@ def make_entities(manager, num):
         manager.add_component_to_entity(unit_b, compB())
         manager.add_component_to_entity(unit_b, compC())
 
+
 class compA:
     def __init__(self):
         self.a = -1
         self.b = 1
+
 
 class compB:
     def __init__(self):
         self.t = True
         self.f = False
 
+
 class compC:
     def __init__(self):
-        self.l = 'left'
-        self.r = 'right'
+        self.L = 'left'
+        self.R = 'right'
+
 
 class sysA(ecs.SystemTemplate):
     def __init__(self):
@@ -71,12 +81,14 @@ class sysA(ecs.SystemTemplate):
     def process(self):
         pass
 
+
 class sysB(ecs.SystemTemplate):
     def __init__(self):
         super().__init__()
 
     def process(self):
         pass
+
 
 class sysC(ecs.SystemTemplate):
     def __init__(self):
