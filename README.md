@@ -33,7 +33,7 @@ class LowerHealth(ecs.SystemTemplate):
 ```
  #### Using it
  ---
- The first step is you need a Manager. This is simple enough
+ To use ECS-Py in your code you will just need to put the ecs folder in the root folder of your project. After that the first step is you need a Manager. This is simple enough
 ```python
 manager = ecs.Manager()
 ```
