@@ -52,6 +52,7 @@ class Manager:
         :return: The ID of the new Entity
         """
         self._next_entity_id += 1
+        self._entities[self._next_entity_id] = {}
         for component in components:
             self.add_component_to_entity(component, self._next_entity_id)
         return self._next_entity_id

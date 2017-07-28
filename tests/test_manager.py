@@ -50,7 +50,6 @@ def test_remove_entity_with_immediate_true(manager):
     with pytest.raises(KeyError):
         manager.get_all_components_from_entity(entityA)
         manager.get_all_components_from_entity(entityB)
-    with pytest.raises(KeyError):
         manager.remove_entity(999, immediate=True)
 
 
