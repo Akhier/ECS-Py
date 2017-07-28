@@ -121,6 +121,15 @@ def test_clear_database(populated_manager):
     assert populated_manager._next_entity_id == 0
 
 
+def test_add_system(populated_manager):
+    assert len(populated_manager._systems) == 0
+    systemA = sysA()
+    assert isinstance(systemA, ecs.SystemTemplate)
+    populated_manager.add_system(sysA())
+    assert len(populated_manager._systems) == 1
+    assert isinstance(populated_manager._systems[0], ecs.SystemTemplate)
+
+
 ###############################
 # Helper Function and Classes #
 ###############################
