@@ -113,6 +113,14 @@ def test_get_components(populated_manager):
         assert type(b) == compB
 
 
+def test_clear_database(populated_manager):
+    populated_manager.clear_database()
+    assert len(populated_manager._entities) == 0
+    assert len(populated_manager._components) == 0
+    assert len(populated_manager._systems) == 0
+    assert populated_manager._next_entity_id == 0
+
+
 ###############################
 # Helper Function and Classes #
 ###############################
