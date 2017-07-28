@@ -53,7 +53,7 @@ class Manager:
         """
         self._next_entity_id += 1
         for component in components:
-            self.add_component(self._next_entity_id, component)
+            self.add_component_to_entity(component, self._next_entity_id)
         return self._next_entity_id
 
     def remove_entity(self, entity, immediate=False):
@@ -119,11 +119,11 @@ class Manager:
         """
         component_type = type(component_instance)
         if component_type not in self._components:
-            self._components[component_type].set()
+            self._components[component_type] = set()
         self._components[component_type].add(entity)
         if entity not in self._entities:
             self._entities[entity] = {}
-        self._entities[entity][component_type].add(component_instance)
+        self._entities[entity][component_type] = component_instance
 
     def remove_component_from_entity(self, component_type, entity):
         """Remove a component from an entity by type
