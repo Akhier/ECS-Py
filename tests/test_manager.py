@@ -41,6 +41,19 @@ def test_new_entity_with_components(manager):
     assert manager.has_component(entityB, compC) is True
 
 
+def test_remove_entity_with_immediate_true(manager):
+    entityA = manager.new_entity(compA)
+    entityB = manager.new_entity()
+    assert entityB == 2
+    manager.remove_entity(entityA, immediate=True)
+    manager.remove_entity(entityB, immediate=True)
+    with pytest.raises(KeyError):
+        manager.get_all_components_from_entity(entityA)
+        manager.get_all_components_from_entity(entityB)
+    with pytest.raises(KeyError):
+        manager.remove_entity(999, immediate=True)
+
+
 ###############################
 # Helper Function and Classes #
 ###############################
