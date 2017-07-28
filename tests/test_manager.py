@@ -53,6 +53,21 @@ def test_remove_entity_with_immediate_true(manager):
         manager.remove_entity(999, immediate=True)
 
 
+def test_remove_entity_default(manager):
+    entityA = manager.new_entity(compA)
+    entityB = manager.new_entity()
+    assert entityB == 2
+    manager.remove_entity(entityA)
+    manager.remove_entity(entityB)
+    assert manager.has_component(entityA, compA) is False
+    manager.add_component_to_entity(compA(), entityB)
+    assert manager.has_component(entityB, compA) is True
+    manager.process()
+    with pytest.raises(KeyError):
+        manager.get_all_components_from_entity(entityA)
+        manager.get_all_components_from_entity(entityB)
+
+
 ###############################
 # Helper Function and Classes #
 ###############################
