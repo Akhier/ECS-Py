@@ -75,6 +75,17 @@ def test_get_component_from_entity(manager):
         manager.get_component_from_entity(entityA, compB)
 
 
+def test_get_all_components_from_entity(manager):
+    compa = compA()
+    entityA = manager.new_entity(compa, compB(), compC())
+    all_components = manager.get_all_components_from_entity(entityA)
+    assert type(all_components) == tuple
+    assert len(all_components) == 3
+    assert compa in all_components
+    with pytest.raises(KeyError):
+        manager.get_all_components_from_entity(999)
+
+
 ###############################
 # Helper Function and Classes #
 ###############################
