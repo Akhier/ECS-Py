@@ -27,6 +27,15 @@ def test_new_entity(manager):
     assert type(entityA) and type(entityB) == int
     assert entityA < entityB
 
+def test_new_entity_with_components(manager):
+    entityA = manager.new_entity(compA())
+    entityB = manager.new_entity(compB(), compC())
+    assert manager.has_component(entityA, compA) is True
+    assert manager.has_component(entityA, compB) is False
+    assert manager.has_component(entityB, compA) is False
+    assert manager.has_component(entityB, compB) is True
+    assert manager.has_component(entityB, compC) is True
+
 ###############################
 # Helper Function and Classes #
 ###############################
