@@ -1,10 +1,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Build Status](https://travis-ci.org/Akhier/ECS-Py.svg?branch=master)](https://travis-ci.org/Akhier/ECS-Py)
 
-## ECS-Py
+### ECS-Py
 ---
 ECS-Py is my implimentation of a basic Entity Component System (ECS).
 
-
+ 
 
 #### Structure
 ---
@@ -34,6 +34,7 @@ class LowerHealth(ecs.SystemTemplate):
             self.manager.remove_component_from_entity(Damage, entity)
 ```
 
+ 
 
  #### Using it
  ---
@@ -56,6 +57,7 @@ Finally we can process everything with the manager
 manager.process()
 ```
 
+ 
 
 #### Examples
 ---
