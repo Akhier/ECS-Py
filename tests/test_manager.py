@@ -2,6 +2,7 @@ import sys
 sys.path.append("..")
 import ecs
 import pytest
+import types
 
 
 @pytest.fixture
@@ -10,10 +11,10 @@ def manager():
 
 
 @pytest.fixture
-def get_populated_manager():
-    populated_manager = ecs.Manager()
-    make_entities(populated_manager, 1000)
-    return populated_manager
+def populated_manager():
+    new_populated_manager = ecs.Manager()
+    make_entities(new_populated_manager, 1000)
+    return new_populated_manager
 
 
 def test_manager_creation(manager):
@@ -92,6 +93,14 @@ def test_has_component(manager):
     assert manager.has_component(entityA, compB) is False
 
 
+def test_get_component(populated_manager):
+    assert isinstance(populated_manager.get_component(
+        compA), types.GeneratorType)
+    for entity, component in populated_manager.get_component(compA):
+        assert type(entity) == int
+        assert type(component) == compA
+
+
 ###############################
 # Helper Function and Classes #
 ###############################
@@ -99,10 +108,10 @@ def test_has_component(manager):
 
 def make_entities(manager, num):
     for _ in range(num // 2):
-        unit_a = manager.make_entities()
+        unit_a = manager.new_entity()
         manager.add_component_to_entity(unit_a, compA())
         manager.add_component_to_entity(unit_a, compB())
-        unit_b = manager.make_entities()
+        unit_b = manager.new_entity()
         manager.add_component_to_entity(unit_b, compB())
         manager.add_component_to_entity(unit_b, compC())
 
