@@ -77,12 +77,12 @@ def test_get_component_from_entity(manager):
 
 
 def test_get_all_components_from_entity(manager):
-    compa = compA()
-    entityA = manager.new_entity(compa, compB(), compC())
+    componentA = compA()
+    entityA = manager.new_entity(componentA, compB(), compC())
     all_components = manager.get_all_components_from_entity(entityA)
     assert type(all_components) == tuple
     assert len(all_components) == 3
-    assert compa in all_components
+    assert componentA in all_components
     with pytest.raises(KeyError):
         manager.get_all_components_from_entity(999)
 
@@ -91,6 +91,13 @@ def test_has_component(manager):
     entityA = manager.new_entity(compA())
     assert manager.has_component(entityA, compA) is True
     assert manager.has_component(entityA, compB) is False
+
+
+def test_remove_component_from_entity(manager):
+    entityA = manager.new_entity(compA())
+    manager.remove_component_from_entity(compA, entityA)
+    with pytest.raises(KeyError):
+        manager.remove_component_from_entity(compA, entityA)
 
 
 def test_get_component(populated_manager):
@@ -181,14 +188,6 @@ class sysA(ecs.SystemTemplate):
 
 
 class sysB(ecs.SystemTemplate):
-    def __init__(self):
-        super().__init__()
-
-    def process(self):
-        pass
-
-
-class sysC(ecs.SystemTemplate):
     def __init__(self):
         super().__init__()
 
