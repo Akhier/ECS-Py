@@ -1,3 +1,6 @@
+import ecs
+
+
 class Coordinate:
     def __init__(self, x=0, y=0):
         self.x = x
@@ -8,3 +11,15 @@ class Velocity:
     def __init__(self, x=0, y=0):
         self.x = x
         self.y = y
+
+
+class ProcessMovement(ecs.SystemTemplate):
+    def __init__(self):
+        super().__init__()
+
+    def process(self):
+        for entity, (coordinate, velocity) in self.Manager.get_components(
+                Coordinate, Velocity):
+            coordinate.x += velocity.x
+            coordinate.y += velocity.y
+            print("Current Location: {}".format((coordinate.x, coordinate.y)))
