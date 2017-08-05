@@ -67,6 +67,15 @@ def test_remove_entity_default(manager):
         manager.get_all_components_from_entity(entityB)
 
 
+def test_duplicate_entity(manager):
+    entityA = manager.new_entity(compA(), compB())
+    entityB = manager.duplicate_entity(entityA)
+    assert entityA is not entityB
+    manager.get_component_from_entity(compA, entityB).a = 1
+    assert manager.get_component_from_entity(compA, entityA).a is -1
+    assert manager.get_component_from_entity(compA, entityB).a is 1
+
+
 def test_get_component_from_entity(manager):
     entityA = manager.new_entity(compA())
     assert isinstance(manager.get_component_from_entity(compA, entityA), compA)

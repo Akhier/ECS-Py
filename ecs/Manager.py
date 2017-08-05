@@ -1,3 +1,4 @@
+import copy
 import ecs
 
 
@@ -77,6 +78,19 @@ class Manager:
             del self._entities[entity]
         else:
             self._dead_entities.add(entity)
+
+    def duplicate_entity(self, entity):
+        """Creates and returns a new Entity that is a copy of another
+
+        Raises KeyError if Entity does not exist
+        :param entity: Entity you want to make a duplicate
+        :return: The duplicate entities Id
+        """
+        output = self.new_entity()
+        contents = copy.deepcopy(self.get_all_components_from_entity(entity))
+        for component in contents:
+            self.add_component_to_entity(component, output)
+        return output
 
     def get_component_from_entity(self, component_type, entity):
         """Get component instance of specified type from given entity
