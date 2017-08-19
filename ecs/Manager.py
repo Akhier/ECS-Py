@@ -1,3 +1,4 @@
+import shelve
 import copy
 import ecs
 
@@ -15,6 +16,21 @@ class Manager:
         self._components = {}
         self._entities = {}
         self._dead_entities = set()
+
+    def save_state(self, filename):
+        with shelve.open(filename, 'n') as save:
+            save['systems'] = self._systems
+            save['next_entity_id'] = self._next_entity_id
+            save['components'] = self._components
+            save['entities'] = self._entities
+
+    def load_state(self, filename):
+        self.clear_database()
+        with shelve.open(filename, 'r') as load:
+            self._systems = load['systems']
+            self._next_entity_id = load['next_entity_id']
+            self._components = load['components']
+            self._entities = load['entities']
 
     def clear_database(self):
         """Clears all Components and Entities from the Manager
